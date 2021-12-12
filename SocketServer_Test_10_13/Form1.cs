@@ -1,0 +1,166 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+
+
+
+namespace Socket_Test
+{
+    public partial class Form1 : Form
+    {
+        private string _ip;
+        private int _port;
+        private Socket _socket = null;
+        private byte[] buffer = new byte[1024 * 1024 * 2];
+        string status;
+        int count = 0;
+
+        public Thread Thread_Receive;                //声明一个Socket线程
+
+     
+
+        //SocketClient client = new SocketClient();  //新建一个关于 SocketClient 的一个对象  这样才可以使用 SocketClient 中的函数
+
+        int year, month, day, hour, Minute, Secend;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+       
+
+        public void GetDateTime()
+        {
+            DateTime dt = DateTime.Now;
+
+            year = dt.Year;
+            month = dt.Month;
+            day = dt.Day;
+            hour = dt.Hour;
+            Minute = dt.Minute;
+            Secend = dt.Second;
+        }
+
+        public string StartClient()
+        {
+            try
+            {
+                //1.0 实例化套接字(IP4寻址地址,流式传输,TCP协议)
+                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                //允许SOCKET被绑定在已使用的地址上。
+                _socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+                //2.0 创建IP对象
+                IPAddress address = IPAddress.Parse(_ip);
+                //3.0 创建网络端口包括ip和端口
+                IPEndPoint endPoint = new IPEndPoint(address, _port);
+                //4.0 建立连接
+                _socket.Connect(endPoint);
+                status = ("连接服务器成功");
+                Thread_Receive = new Thread(Socket_Receive);
+                Thread_Receive.Start();
+
+            }
+            catch (Exception ex)
+            {
+                _socket.Shutdown(SocketShutdown.Both);
+                _socket.Close();
+                //Console.WriteLine(ex.Message);
+            }
+
+            return status;
+        }
+
+            private void BT_SocketConnect_Click(object sender, EventArgs e)
+        {
+            this._ip = TB_Ip.Text;
+            this._port = int.Parse(TB_Port.Text);
+
+            label_Status.Text = StartClient();
+            if(label_Status.Text == "连接服务器成功")
+            {
+                BT_SocketConnect.Enabled = false;
+            }
+
+
+
+        }
+
+        private void BT_Send_Click(object sender, EventArgs e)
+        {
+            GetDateTime();
+            string DateTime = year.ToString() + month.ToString() + day.ToString();
+            _socket.Send(Encoding.UTF8.GetBytes(DateTime));
+        }
+
+        private void BT_SocketDisConnect_Click(object sender, EventArgs e)
+        {
+            _socket.Shutdown(SocketShutdown.Both);
+            _socket.Close();
+
+
+            Thread_Receive.Interrupt();
+            Thread_Receive.Abort();
+
+            if (_socket.Connected == false) 
+            {
+                BT_SocketConnect.Enabled = true;
+            }
+            
+
+        }
+
+        private void Socket_Receive()
+        {
+            byte[] buffer = new byte[2048];
+            
+            while (true)
+            {
+                if (buffer != null)
+                {
+                    //TB_Receive.Text = _socket.Receive(buffer).ToString(); //会导致跨线程调用控件
+                    Thread thread1 = new Thread(new ParameterizedThreadStart(TB_Receive_delegate));
+                    thread1.Start(_socket.Receive(buffer).ToString());
+
+
+                    //label3.Text = count++.ToString(); 
+                }
+                
+            }
+        }
+
+
+        //TB_Receive访问委托 
+        private void TB_Receive_delegate(object str) 
+        {
+            if (TB_Receive.InvokeRequired)// 当一个控件的InvokeRequired属性值为真时，说明有一个创建它以外的线程想访问它
+            {
+                Action<string> TB_ReceiveDelegate = (x) => { this.TB_Receive.Text = x.ToString(); };
+                this.TB_Receive.Invoke(TB_ReceiveDelegate, str);
+            }
+            else
+            {
+                this.TB_Receive.Text = str.ToString();
+            }
+
+            if (label3.InvokeRequired)
+            {
+                Action<string> label3Delegate1 = (count) => { this.label3.Text = count.ToString(); };
+                this.label3.Invoke(label3Delegate1,count);
+            }
+
+        }
+
+    }
+}
