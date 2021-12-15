@@ -40,6 +40,7 @@ namespace Socket_Test
             this.label2 = new System.Windows.Forms.Label();
             this.BT_SocketDisConnect = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.BT_TimeCheck = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BT_SocketConnect
@@ -70,7 +71,7 @@ namespace Socket_Test
             // 
             // TB_Receive
             // 
-            this.TB_Receive.Location = new System.Drawing.Point(49, 166);
+            this.TB_Receive.Location = new System.Drawing.Point(49, 209);
             this.TB_Receive.Multiline = true;
             this.TB_Receive.Name = "TB_Receive";
             this.TB_Receive.Size = new System.Drawing.Size(207, 189);
@@ -87,7 +88,7 @@ namespace Socket_Test
             // 
             // TB_Send
             // 
-            this.TB_Send.Location = new System.Drawing.Point(292, 166);
+            this.TB_Send.Location = new System.Drawing.Point(292, 209);
             this.TB_Send.Multiline = true;
             this.TB_Send.Name = "TB_Send";
             this.TB_Send.Size = new System.Drawing.Size(204, 189);
@@ -95,7 +96,7 @@ namespace Socket_Test
             // 
             // BT_Send
             // 
-            this.BT_Send.Location = new System.Drawing.Point(421, 361);
+            this.BT_Send.Location = new System.Drawing.Point(421, 404);
             this.BT_Send.Name = "BT_Send";
             this.BT_Send.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.BT_Send.Size = new System.Drawing.Size(75, 23);
@@ -107,7 +108,7 @@ namespace Socket_Test
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(290, 151);
+            this.label1.Location = new System.Drawing.Point(290, 194);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 8;
@@ -116,7 +117,7 @@ namespace Socket_Test
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(47, 151);
+            this.label2.Location = new System.Drawing.Point(47, 194);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 9;
@@ -124,7 +125,7 @@ namespace Socket_Test
             // 
             // BT_SocketDisConnect
             // 
-            this.BT_SocketDisConnect.Location = new System.Drawing.Point(363, 78);
+            this.BT_SocketDisConnect.Location = new System.Drawing.Point(217, 136);
             this.BT_SocketDisConnect.Name = "BT_SocketDisConnect";
             this.BT_SocketDisConnect.Size = new System.Drawing.Size(126, 52);
             this.BT_SocketDisConnect.TabIndex = 10;
@@ -135,17 +136,28 @@ namespace Socket_Test
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(106, 151);
+            this.label3.Location = new System.Drawing.Point(106, 194);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(11, 12);
             this.label3.TabIndex = 11;
             this.label3.Text = "0";
             // 
+            // BT_TimeCheck
+            // 
+            this.BT_TimeCheck.Location = new System.Drawing.Point(374, 78);
+            this.BT_TimeCheck.Name = "BT_TimeCheck";
+            this.BT_TimeCheck.Size = new System.Drawing.Size(122, 52);
+            this.BT_TimeCheck.TabIndex = 12;
+            this.BT_TimeCheck.Text = "对时";
+            this.BT_TimeCheck.UseVisualStyleBackColor = true;
+            this.BT_TimeCheck.Click += new System.EventHandler(this.BT_TimeCheck_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 396);
+            this.ClientSize = new System.Drawing.Size(554, 452);
+            this.Controls.Add(this.BT_TimeCheck);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.BT_SocketDisConnect);
             this.Controls.Add(this.label2);
@@ -159,6 +171,7 @@ namespace Socket_Test
             this.Controls.Add(this.BT_SocketConnect);
             this.Name = "Form1";
             this.Text = "无线对时器(邱瀚天)";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,6 +190,7 @@ namespace Socket_Test
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BT_SocketDisConnect;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button BT_TimeCheck;
     }
 }
 

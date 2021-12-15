@@ -38,7 +38,10 @@ namespace Socket_Test
             InitializeComponent();
         }
 
-       
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            CheckForIllegalCrossThreadCalls = false;  //不捕获跨线程控件调用检查
+        }
 
         public void GetDateTime()
         {
@@ -50,6 +53,13 @@ namespace Socket_Test
             hour = dt.Hour;
             Minute = dt.Minute;
             Secend = dt.Second;
+        }
+
+        private void BT_TimeCheck_Click(object sender, EventArgs e)
+        {
+            GetDateTime();
+            string DateTime = year.ToString() + month.ToString() + day.ToString();
+            _socket.Send(Encoding.UTF8.GetBytes(DateTime));
         }
 
         public string StartClient()
@@ -82,7 +92,9 @@ namespace Socket_Test
             return status;
         }
 
-            private void BT_SocketConnect_Click(object sender, EventArgs e)
+        
+
+        private void BT_SocketConnect_Click(object sender, EventArgs e)
         {
             this._ip = TB_Ip.Text;
             this._port = int.Parse(TB_Port.Text);
@@ -96,14 +108,20 @@ namespace Socket_Test
 
 
         }
-
+       /// <summary>
+       /// 发送指定数据
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void BT_Send_Click(object sender, EventArgs e)
         {
-            GetDateTime();
-            string DateTime = year.ToString() + month.ToString() + day.ToString();
-            _socket.Send(Encoding.UTF8.GetBytes(DateTime));
+            _socket.Send(Encoding.UTF8.GetBytes(TB_Send.ToString()));
         }
-
+        /// <summary>
+        /// 按键--断开端口连接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BT_SocketDisConnect_Click(object sender, EventArgs e)
         {
             _socket.Shutdown(SocketShutdown.Both);
@@ -129,38 +147,39 @@ namespace Socket_Test
             {
                 if (buffer != null)
                 {
-                    //TB_Receive.Text = _socket.Receive(buffer).ToString(); //会导致跨线程调用控件
-                    Thread thread1 = new Thread(new ParameterizedThreadStart(TB_Receive_delegate));
-                    thread1.Start(_socket.Receive(buffer).ToString());
+                    TB_Receive.Text = _socket.Receive(buffer).ToString(); //会导致跨线程调用控件
+                    label3.Text = count++.ToString();
+                    //Thread thread1 = new Thread(new ParameterizedThreadStart(TB_Receive_delegate));
+                    //thread1.Start(_socket.Receive(buffer).ToString());
 
 
-                    //label3.Text = count++.ToString(); 
+
                 }
                 
             }
         }
 
 
-        //TB_Receive访问委托 
-        private void TB_Receive_delegate(object str) 
-        {
-            if (TB_Receive.InvokeRequired)// 当一个控件的InvokeRequired属性值为真时，说明有一个创建它以外的线程想访问它
-            {
-                Action<string> TB_ReceiveDelegate = (x) => { this.TB_Receive.Text = x.ToString(); };
-                this.TB_Receive.Invoke(TB_ReceiveDelegate, str);
-            }
-            else
-            {
-                this.TB_Receive.Text = str.ToString();
-            }
+        ////TB_Receive访问委托 
+        //private void TB_Receive_delegate(object str) 
+        //{
+        //    if (TB_Receive.InvokeRequired)// 当一个控件的InvokeRequired属性值为真时，说明有一个创建它以外的线程想访问它
+        //    {
+        //        Action<string> TB_ReceiveDelegate = (x) => { this.TB_Receive.Text = x.ToString(); };
+        //        this.TB_Receive.Invoke(TB_ReceiveDelegate, str);
+        //    }
+        //    else
+        //    {
+        //        this.TB_Receive.Text = str.ToString();
+        //    }
 
-            if (label3.InvokeRequired)
-            {
-                Action<string> label3Delegate1 = (count) => { this.label3.Text = count.ToString(); };
-                this.label3.Invoke(label3Delegate1,count);
-            }
+        //    if (label3.InvokeRequired)
+        //    {
+        //        Action<string> label3Delegate1 = (count) => { this.label3.Text = count.ToString(); };
+        //        this.label3.Invoke(label3Delegate1,count);
+        //    }
 
-        }
+        //}
 
     }
 }
