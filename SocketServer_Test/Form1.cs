@@ -44,7 +44,7 @@ namespace Socket_Test
         }
 
         public void GetDateTime()
-        {
+        {      
             DateTime dt = DateTime.Now;
 
             year = dt.Year;
