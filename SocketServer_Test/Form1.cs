@@ -26,8 +26,8 @@ namespace Socket_Test
         int count = 0;
 
         public Thread Thread_Receive;                //声明一个Socket线程
+        public Thread MainThread;
 
-     
 
         //SocketClient client = new SocketClient();  //新建一个关于 SocketClient 的一个对象  这样才可以使用 SocketClient 中的函数
 
@@ -41,8 +41,23 @@ namespace Socket_Test
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;  //不捕获跨线程控件调用检查
+            MainThread = new Thread(Basic);
         }
 
+        public void Basic()
+        {
+            while (true) 
+            {
+                if (this._socket.Connected == true)
+                {
+                    label_Status.Text = "连接成功";
+                }
+                else
+                {
+                    label_Status.Text = "未连接";
+                }
+            }
+        }
         public void GetDateTime()
         {      
             DateTime dt = DateTime.Now;
@@ -66,6 +81,7 @@ namespace Socket_Test
         {
             try
             {
+                label_Status.Text = "请稍等....";
                 //1.0 实例化套接字(IP4寻址地址,流式传输,TCP协议)
                 _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 //允许SOCKET被绑定在已使用的地址上。
@@ -82,11 +98,12 @@ namespace Socket_Test
                 Thread_Receive.Start();
 
             }
-            catch (Exception ex)
+            catch
             {
-                _socket.Shutdown(SocketShutdown.Both);
-                _socket.Close();
-                //Console.WriteLine(ex.Message);
+                //_socket.Shutdown(SocketShutdown.Both);
+                //_socket.Close();
+                
+                MessageBox.Show("连接超时，请检查IP地址与端口号是否正确", "Warning");
             }
 
             return status;
@@ -96,18 +113,27 @@ namespace Socket_Test
 
         private void BT_SocketConnect_Click(object sender, EventArgs e)
         {
+            Thread BT_Click = new Thread(delegate () { BT_SocketConnect_Click_Thread(); });
+            
+            
+            BT_Click.IsBackground = true; //当主线程退出时，后台线程会被CLR调用Abort()来彻底终止程序
+            BT_Click.Start();
+
+
+        }
+
+        public  void BT_SocketConnect_Click_Thread()
+        {
             this._ip = TB_Ip.Text;
             this._port = int.Parse(TB_Port.Text);
 
             label_Status.Text = StartClient();
-            if(label_Status.Text == "连接服务器成功")
+            if (label_Status.Text == "连接成功")
             {
                 BT_SocketConnect.Enabled = false;
             }
-
-
-
         }
+
        /// <summary>
        /// 发送指定数据
        /// </summary>
@@ -134,6 +160,7 @@ namespace Socket_Test
             if (_socket.Connected == false) 
             {
                 BT_SocketConnect.Enabled = true;
+                label_Status.Text = "未连接";
             }
             
 

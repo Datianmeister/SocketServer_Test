@@ -45,7 +45,7 @@ namespace Socket_Test
             // 
             // BT_SocketConnect
             // 
-            this.BT_SocketConnect.Location = new System.Drawing.Point(217, 78);
+            this.BT_SocketConnect.Location = new System.Drawing.Point(217, 51);
             this.BT_SocketConnect.Name = "BT_SocketConnect";
             this.BT_SocketConnect.Size = new System.Drawing.Size(126, 52);
             this.BT_SocketConnect.TabIndex = 0;
@@ -55,7 +55,7 @@ namespace Socket_Test
             // 
             // TB_Ip
             // 
-            this.TB_Ip.Location = new System.Drawing.Point(56, 68);
+            this.TB_Ip.Location = new System.Drawing.Point(49, 51);
             this.TB_Ip.Name = "TB_Ip";
             this.TB_Ip.Size = new System.Drawing.Size(140, 21);
             this.TB_Ip.TabIndex = 1;
@@ -63,7 +63,7 @@ namespace Socket_Test
             // 
             // TB_Port
             // 
-            this.TB_Port.Location = new System.Drawing.Point(56, 109);
+            this.TB_Port.Location = new System.Drawing.Point(49, 92);
             this.TB_Port.Name = "TB_Port";
             this.TB_Port.Size = new System.Drawing.Size(58, 21);
             this.TB_Port.TabIndex = 2;
@@ -80,7 +80,7 @@ namespace Socket_Test
             // label_Status
             // 
             this.label_Status.AutoSize = true;
-            this.label_Status.Location = new System.Drawing.Point(215, 63);
+            this.label_Status.Location = new System.Drawing.Point(215, 36);
             this.label_Status.Name = "label_Status";
             this.label_Status.Size = new System.Drawing.Size(41, 12);
             this.label_Status.TabIndex = 5;
@@ -125,7 +125,7 @@ namespace Socket_Test
             // 
             // BT_SocketDisConnect
             // 
-            this.BT_SocketDisConnect.Location = new System.Drawing.Point(217, 136);
+            this.BT_SocketDisConnect.Location = new System.Drawing.Point(217, 109);
             this.BT_SocketDisConnect.Name = "BT_SocketDisConnect";
             this.BT_SocketDisConnect.Size = new System.Drawing.Size(126, 52);
             this.BT_SocketDisConnect.TabIndex = 10;
@@ -144,7 +144,7 @@ namespace Socket_Test
             // 
             // BT_TimeCheck
             // 
-            this.BT_TimeCheck.Location = new System.Drawing.Point(374, 78);
+            this.BT_TimeCheck.Location = new System.Drawing.Point(374, 51);
             this.BT_TimeCheck.Name = "BT_TimeCheck";
             this.BT_TimeCheck.Size = new System.Drawing.Size(122, 52);
             this.BT_TimeCheck.TabIndex = 12;
