@@ -27,7 +27,7 @@ namespace Socket_Test
 
         public Thread Thread_Receive;                //声明一个Socket线程
         public Thread MainThread;
-
+        
 
         //SocketClient client = new SocketClient();  //新建一个关于 SocketClient 的一个对象  这样才可以使用 SocketClient 中的函数
 
@@ -36,12 +36,16 @@ namespace Socket_Test
         public Form1()
         {
             InitializeComponent();
+
+
+            MainThread = new Thread(Basic);
+            MainThread.Start();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;  //不捕获跨线程控件调用检查
-            MainThread = new Thread(Basic);
+            
         }
 
         public void Basic()
@@ -51,10 +55,12 @@ namespace Socket_Test
                 if (this._socket.Connected == true)
                 {
                     label_Status.Text = "连接成功";
+                    BT_TimeCheck.Enabled = true;
                 }
                 else
                 {
                     label_Status.Text = "未连接";
+                    BT_TimeCheck.Enabled = false;
                 }
             }
         }
@@ -168,22 +174,43 @@ namespace Socket_Test
 
         private void Socket_Receive()
         {
+            string result = string.Empty;
             byte[] buffer = new byte[2048];
-            
+            int length = 0;
+            List<byte> data = new List<byte>();
+
             while (true)
             {
-                if (buffer != null)
+                try
                 {
-                    TB_Receive.Text = _socket.Receive(buffer).ToString(); //会导致跨线程调用控件
-                    label3.Text = count++.ToString();
+                    while ((length = _socket.Receive(buffer)) > 0)
+                    {
+                        for (int j = 0; j < length; j++)
+                        {
+                            data.Add(buffer[j]);
+
+                        }
+                        if (length < buffer.Length)
+                        {
+                            break;
+                        }
+                    }
+                    //label3.Text = count++.ToString();
+                    //TB_Receive.Text = _socket.Receive(buffer).ToString(); //会导致跨线程调用控件
                     //Thread thread1 = new Thread(new ParameterizedThreadStart(TB_Receive_delegate));
                     //thread1.Start(_socket.Receive(buffer).ToString());
-
-
-
                 }
-                
+                catch { }
+
+                if (data.Count > 0)
+                {
+                    result = Encoding.UTF8.GetString(data.ToArray(), 0, data.Count); //
+                    TB_Receive.Text = result;
+                }
             }
+            
+
+
         }
 
 

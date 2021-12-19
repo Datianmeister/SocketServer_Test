@@ -41,6 +41,7 @@ namespace Socket_Test
             this.BT_SocketDisConnect = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.BT_TimeCheck = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // BT_SocketConnect
@@ -71,7 +72,7 @@ namespace Socket_Test
             // 
             // TB_Receive
             // 
-            this.TB_Receive.Location = new System.Drawing.Point(49, 209);
+            this.TB_Receive.Location = new System.Drawing.Point(49, 191);
             this.TB_Receive.Multiline = true;
             this.TB_Receive.Name = "TB_Receive";
             this.TB_Receive.Size = new System.Drawing.Size(207, 189);
@@ -88,7 +89,7 @@ namespace Socket_Test
             // 
             // TB_Send
             // 
-            this.TB_Send.Location = new System.Drawing.Point(292, 209);
+            this.TB_Send.Location = new System.Drawing.Point(292, 191);
             this.TB_Send.Multiline = true;
             this.TB_Send.Name = "TB_Send";
             this.TB_Send.Size = new System.Drawing.Size(204, 189);
@@ -96,7 +97,7 @@ namespace Socket_Test
             // 
             // BT_Send
             // 
-            this.BT_Send.Location = new System.Drawing.Point(421, 404);
+            this.BT_Send.Location = new System.Drawing.Point(421, 386);
             this.BT_Send.Name = "BT_Send";
             this.BT_Send.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.BT_Send.Size = new System.Drawing.Size(75, 23);
@@ -108,7 +109,7 @@ namespace Socket_Test
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(290, 194);
+            this.label1.Location = new System.Drawing.Point(290, 176);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 8;
@@ -117,7 +118,7 @@ namespace Socket_Test
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(47, 194);
+            this.label2.Location = new System.Drawing.Point(47, 176);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 9;
@@ -136,7 +137,7 @@ namespace Socket_Test
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(106, 194);
+            this.label3.Location = new System.Drawing.Point(106, 176);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(11, 12);
             this.label3.TabIndex = 11;
@@ -152,11 +153,19 @@ namespace Socket_Test
             this.BT_TimeCheck.UseVisualStyleBackColor = true;
             this.BT_TimeCheck.Click += new System.EventHandler(this.BT_TimeCheck_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(49, 417);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(447, 23);
+            this.progressBar1.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(554, 452);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.BT_TimeCheck);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.BT_SocketDisConnect);
@@ -169,6 +178,7 @@ namespace Socket_Test
             this.Controls.Add(this.TB_Port);
             this.Controls.Add(this.TB_Ip);
             this.Controls.Add(this.BT_SocketConnect);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "无线对时器(邱瀚天)";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -191,6 +201,7 @@ namespace Socket_Test
         private System.Windows.Forms.Button BT_SocketDisConnect;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button BT_TimeCheck;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
